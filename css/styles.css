@@ -1,0 +1,401 @@
+/* ============================================================
+   BUDT748 Fall 2026 - Client Side Technologies
+   Website by Manish Malhotra
+   Custom stylesheet layered on top of Bootstrap 5.3
+   ============================================================ */
+
+/* ---------- 1. DESIGN TOKENS (colors from my Figma file) ---------- */
+:root {
+  --navy:        #0B1020;  /* main background - deep navy   */
+  --navy-soft:   #131A33;  /* slightly lighter panel color  */
+  --text-main:   #F5F7FF;  /* headings / primary text       */
+  --text-muted:  #B8C1D9;  /* secondary text                */
+  --accent:      #7C5CFC;  /* electric purple - buttons     */
+  --accent-dark: #6344E8;  /* purple hover state            */
+  --cyan:        #2DE2E6;  /* bright cyan accent            */
+  --border:      rgba(245, 247, 255, 0.10);
+}
+
+/* ---------- 2. GLOBAL BASE STYLES ---------- */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--navy);
+  color: var(--text-main);
+  font-family: "Montserrat", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  margin: 0;
+  /* stops the page jumping when scrollbars appear */
+  overflow-x: hidden;
+}
+
+h1, h2, h3, h4, h5 {
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: var(--text-main);
+}
+
+p {
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+a {
+  text-decoration: none;
+}
+
+/* ---------- 3. NAVIGATION BAR (Bootstrap navbar overrides) ---------- */
+.navbar {
+  background-color: rgba(11, 16, 32, 0.85);
+  /* frosted glass effect so content scrolls under it nicely */
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+/* My name in the top-left - this is the site logo */
+.navbar-brand {
+  font-size: 1.5rem;      /* 24px, same as my Figma design */
+  font-weight: 700;
+  color: var(--text-main) !important;
+  letter-spacing: 0.01em;
+}
+
+.navbar-brand:hover {
+  color: var(--cyan) !important;
+}
+
+.navbar-nav .nav-link {
+  font-size: 1rem;        /* 16px, same as my Figma design */
+  font-weight: 500;
+  color: var(--text-muted) !important;
+  margin-left: 1.75rem;
+  position: relative;
+  transition: color 0.25s ease;
+}
+
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link.active {
+  color: var(--text-main) !important;
+}
+
+/* small purple underline that grows under the active/hovered link */
+.navbar-nav .nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  height: 2px;
+  width: 0;
+  background-color: var(--accent);
+  transition: width 0.25s ease;
+}
+
+.navbar-nav .nav-link:hover::after,
+.navbar-nav .nav-link.active::after {
+  width: 100%;
+}
+
+/* make the hamburger icon visible on the dark background */
+.navbar-toggler {
+  border-color: var(--border);
+}
+
+.navbar-toggler:focus {
+  box-shadow: 0 0 0 3px rgba(124, 92, 252, 0.35);
+}
+
+/* ---------- 4. HERO SECTION ---------- */
+.hero {
+  min-height: 78vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  position: relative;
+  padding: 5rem 0;
+  overflow: hidden;
+}
+
+/* soft purple glow behind the hero text for depth */
+.hero::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 760px;
+  height: 760px;
+  max-width: 130vw;
+  background: radial-gradient(circle,
+              rgba(124, 92, 252, 0.20) 0%,
+              rgba(124, 92, 252, 0.06) 42%,
+              transparent 68%);
+  pointer-events: none;   /* so it never blocks clicks */
+  z-index: 0;
+}
+
+/* keep the real content above the glow */
+.hero > .container {
+  position: relative;
+  z-index: 1;
+}
+
+.hero h1 {
+  font-size: 3.75rem;     /* 60px, same as my Figma design */
+  font-weight: 700;
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+}
+
+.hero .subtitle {
+  font-size: 1.5rem;      /* 24px, same as my Figma design */
+  color: var(--text-muted);
+  max-width: 720px;
+  margin: 0 auto 2.5rem;
+}
+
+/* thin purple-to-cyan divider used under section headings */
+.accent-rule {
+  width: 90px;
+  height: 4px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, var(--accent), var(--cyan));
+  margin: 0 auto 2rem;
+  border: 0;
+  opacity: 1;
+}
+
+.accent-rule.rule-left {
+  margin-left: 0;
+  margin-right: auto;
+}
+
+/* ---------- 5. BUTTONS ---------- */
+/* my custom purple call-to-action button (180x57 in Figma) */
+.btn-accent {
+  background-color: var(--accent);
+  color: #FFFFFF;
+  border: none;
+  border-radius: 10px;        /* corner radius 10, same as Figma */
+  min-width: 180px;
+  padding: 1rem 2rem;
+  font-size: 1.125rem;        /* 18px */
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  /* drop shadow for the depth effect from the tutorial */
+  box-shadow: 0 10px 26px rgba(124, 92, 252, 0.40);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.btn-accent:hover,
+.btn-accent:focus {
+  background-color: var(--accent-dark);
+  color: #FFFFFF;
+  transform: translateY(-2px);   /* lifts slightly on hover */
+  box-shadow: 0 14px 32px rgba(124, 92, 252, 0.55);
+}
+
+/* outlined secondary button */
+.btn-ghost {
+  background-color: transparent;
+  color: var(--text-main);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  min-width: 180px;
+  padding: 1rem 2rem;
+  font-size: 1.125rem;
+  font-weight: 600;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.btn-ghost:hover {
+  border-color: var(--cyan);
+  color: var(--cyan);
+}
+
+/* ---------- 6. CARDS (Bootstrap grid content) ---------- */
+.info-card {
+  background-color: var(--navy-soft);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 2rem;
+  /* Height is left to the content on purpose. Where I want every card in a
+     row to be the same height I add Bootstrap's own .h-100 class in the HTML.
+     Putting height:100% here instead made cards stretch out of control when
+     several of them were stacked inside one flex column. */
+  transition: transform 0.25s ease, border-color 0.25s ease;
+}
+
+.info-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(124, 92, 252, 0.55);
+}
+
+.info-card h3 {
+  font-size: 1.25rem;
+  margin-bottom: 0.75rem;
+}
+
+.info-card p {
+  margin-bottom: 0;
+  font-size: 0.95rem;
+}
+
+/* small purple square that holds an icon/number at the top of a card */
+.card-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 10px;
+  background-color: rgba(124, 92, 252, 0.16);
+  color: var(--accent);
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 1.25rem;
+}
+
+/* ---------- 7. SECTION SPACING ---------- */
+.section {
+  padding: 5rem 0;
+}
+
+.section-title {
+  font-size: 2.25rem;
+  margin-bottom: 1rem;
+}
+
+/* ---------- 8. DETAIL ROWS (About page course info) ---------- */
+.detail-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1.5rem;
+  padding: 1.15rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.detail-row:last-child {
+  border-bottom: none;
+}
+
+.detail-label {
+  flex: 0 0 210px;
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+.detail-value {
+  flex: 1 1 320px;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+/* ---------- 9. CONTACT PAGE ---------- */
+.contact-link {
+  color: var(--cyan);
+  transition: opacity 0.2s ease;
+}
+
+.contact-link:hover {
+  opacity: 0.75;
+  text-decoration: underline;
+}
+
+/* Bootstrap form fields restyled for the dark theme */
+.form-label {
+  color: var(--text-main);
+  font-weight: 500;
+  margin-bottom: 0.4rem;
+}
+
+.form-control {
+  background-color: var(--navy);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--text-main);
+  padding: 0.8rem 1rem;
+}
+
+.form-control::placeholder {
+  color: rgba(184, 193, 217, 0.55);
+}
+
+/* keep the dark styling when the field is clicked into */
+.form-control:focus {
+  background-color: var(--navy);
+  border-color: var(--accent);
+  color: var(--text-main);
+  box-shadow: 0 0 0 3px rgba(124, 92, 252, 0.22);
+}
+
+/* ---------- 10. FOOTER ---------- */
+.site-footer {
+  border-top: 1px solid var(--border);
+  padding: 2.5rem 0;
+  text-align: center;
+}
+
+.site-footer p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--text-muted);
+}
+
+/* ---------- 11. RESPONSIVE / MEDIA QUERIES ---------- */
+
+/* tablets */
+@media (max-width: 991px) {
+  .hero h1 {
+    font-size: 2.75rem;
+  }
+
+  .navbar-nav .nav-link {
+    margin-left: 0;
+    padding-top: 0.6rem;
+    padding-bottom: 0.6rem;
+  }
+
+  /* the growing underline looks odd in the stacked mobile menu */
+  .navbar-nav .nav-link::after {
+    display: none;
+  }
+}
+
+/* phones */
+@media (max-width: 767px) {
+  .hero {
+    min-height: 68vh;
+    padding: 3.5rem 0;
+  }
+
+  .hero h1 {
+    font-size: 2.15rem;
+  }
+
+  .hero .subtitle {
+    font-size: 1.1rem;
+  }
+
+  .section {
+    padding: 3.5rem 0;
+  }
+
+  .section-title {
+    font-size: 1.75rem;
+  }
+
+  /* stack the label above the value instead of side by side */
+  .detail-label {
+    flex: 1 1 100%;
+  }
+
+  .btn-accent,
+  .btn-ghost {
+    width: 100%;
+  }
+}
